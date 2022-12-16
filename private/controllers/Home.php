@@ -3,6 +3,6 @@
 class Home extends Controller
 {
     function index(){
-        echo "Hello from home controller";
+        echo $this->view('home');
     }
 }
