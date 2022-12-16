@@ -2,7 +2,7 @@
 
 class Students extends Controller
 {
-    function __construct(){
-        echo "Hello from students controller";
+    function index($id = null){
+        echo "Hello from students controller & a student id is $id";
     }
 }
