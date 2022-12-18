@@ -8,7 +8,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse ms-5" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="<?=ROOT?>/">DASHBOARD</a>
@@ -22,11 +22,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?=ROOT?>/tests">TESTS</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         USER
                     </a>
-                    <ul class="dropdown-menu w-25">
+                    <ul class="dropdown-menu w-25 dropdown-menu-end">
                         <li><a class="dropdown-item" href="<?=ROOT?>/profile">Profile</a></li>
                         <li><a class="dropdown-item" href="<?=ROOT?>/">Dashboard</a></li>
                         <div class="dropdown-divider"></div>
