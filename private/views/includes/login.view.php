@@ -1,22 +1,22 @@
-<?php $this->view('includes/header'); ?>
+<?php $this->view('includes/header');?>
 
     <div class="container-fluid">
-        <form class="w-50 mx-auto mt-5">
+        <form class="w-50 mx-auto mt-5" method="post">
             <div class="mb-3 text-center">
                 <h2>My school</h2>
                 <img class="rounded-circle" src="images/logo.png" alt="logo" style="width: 80px">
             </div>
             <h3>Login</h3>
             <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <input value="<?=get_var('email')?>" name="email" type="email" class="form-control p-2" id="email" placeholder="Email"">
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password">
+                <input value="<?=get_var('password')?>"  type="password" class="form-control p-2" id="password" name="password" placeholder="Password">
+                <?php if(isset($errors['email'])) {  ?>
+                    <div class="alert alert-danger p-2 mt-2" role="alert"><?=$errors['email']?></div>
+                <?php } ?>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button name="submit" type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
 
