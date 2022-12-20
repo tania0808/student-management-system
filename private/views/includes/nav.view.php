@@ -26,7 +26,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        USER
+                        <?php echo Auth::getFirst_Name();?>
                     </a>
                     <ul class="dropdown-menu w-25 dropdown-menu-end">
                         <li><a class="dropdown-item" href="<?=ROOT?>/profile">Profile</a></li>

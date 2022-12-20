@@ -15,7 +15,7 @@ class Login extends Controller
                 $row = $row[0];
                 if(password_verify($_POST['password'], $row->password)){
                     Auth::authenticate($row);
-                    $this->redirect('/home');
+                    $this->redirect('home');
                 }
             }
 
