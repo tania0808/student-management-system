@@ -79,7 +79,10 @@ class User extends Model
 
     public function make_school_id($data)
     {
-        $data['school_id'] = $this->generateRandomString();
+        if(isset($_SESSION['USER']->school_id)){
+            //$data['school_id'] = $this->generateRandomString();
+            $data['school_id'] = $_SESSION['USER']->school_id;
+        }
         return $data;
     }
 
