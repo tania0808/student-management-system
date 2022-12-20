@@ -43,24 +43,28 @@ class User extends Model
             $this->errors['email'] = 'Email is not valid !';
         }
 
+        // check if email exists
+        if ($this->where('email', $data['email'])) {
+            $this->errors['email'] = 'That email is already in use!';
+        }
+
         // check for password
         if (empty($data['password']) || $data['password'] != $data['password2']) {
             $this->errors['password'] = 'The passwords did not match!';
         }
+
         if (strlen($data['password']) <= 8) {
             $this->errors['password'] = 'Password must be at least 8 characters long !';
         }
 
         // check for gender
         $genders = ['female', 'male'];
-
         if (empty($data['gender']) || !in_array($data['gender'], $genders)) {
             $this->errors['gender'] = 'Gender is not valid !';
         }
 
         // check for rank
         $ranks = ['student', 'reception', 'lecturer', 'admin', 'super_admin'];
-
         if (empty($data['rank']) || !in_array($data['rank'], $ranks)) {
             $this->errors['rank'] = 'Rank is not valid !';
         }
