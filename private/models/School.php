@@ -16,6 +16,11 @@ class School extends Model
     protected $beforeInsert = [
         'make_school_id',
         'make_user_id',
+        'get_user'
+    ];
+
+    protected $afterSelect = [
+        'get_user'
     ];
 
     public function validate($data)
@@ -44,6 +49,16 @@ class School extends Model
     public function make_school_id($data)
     {
         $data['school_id'] = generateRandomString();
+        return $data;
+    }
+
+    public function get_user($data)
+    {
+        $user = new User();
+        foreach ($data as $key => $row){
+            $result = $user->where('student_id', $row->user_id);
+            $data[$key]->user = is_array($result) ? $result[0] : false;
+        }
         return $data;
     }
 

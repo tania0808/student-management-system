@@ -18,12 +18,13 @@
 
             </tr>
 
-            <?php if($schools){
-            foreach ($schools as $school) { ?>
+            <?php
+            if($schools){
+            foreach ($schools as $school) {?>
                 <tr>
                     <td><?=$school->school_name?></td>
-                    <td><?=$school->user_id?></td>
-                    <td><?=$school->date?></td>
+                    <td><?=$school->user->first_name?> <?=$school->user->last_name?></td>
+                    <td><?=get_date($school->date)?></td>
                     <td>
                         <button class="btn btn-sm btn-info text-white"><i class="fa fa-edit me-2"></i>Edit</button>
                         <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash me-2"></i>Delete</button>
