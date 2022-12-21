@@ -18,3 +18,7 @@ function get_select($key, $value){
 function escape($var){
     return htmlspecialchars($var);
 }
+
+function generateRandomString($length = 20) {
+    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+}

@@ -77,14 +77,14 @@ class User extends Model
 
     public function make_user_id($data)
     {
-        $data['student_id'] = $this->generateRandomString();
+        $data['student_id'] = generateRandomString();
         return $data;
     }
 
     public function make_school_id($data)
     {
         if(isset($_SESSION['USER']->school_id)){
-            //$data['school_id'] = $this->generateRandomString();
+            //$data['school_id'] = generateRandomString();
             $data['school_id'] = $_SESSION['USER']->school_id;
         }
         return $data;
@@ -94,10 +94,6 @@ class User extends Model
     {
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         return $data;
-    }
-
-    public function generateRandomString($length = 20) {
-        return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
     }
 
 }
