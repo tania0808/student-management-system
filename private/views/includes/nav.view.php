@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="nav-link text-reset" href="<?=ROOT?>/">
-            <img src="images/logo.png" alt="logo" style="width: 50px">
+            <img src="<?=ROOT?>/images/logo.png" alt="logo" style="width: 50px">
         MY SCHOOL
         </a>
 

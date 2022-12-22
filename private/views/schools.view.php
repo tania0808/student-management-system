@@ -26,8 +26,12 @@
                     <td><?=$school->user->first_name?> <?=$school->user->last_name?></td>
                     <td><?=get_date($school->date)?></td>
                     <td>
-                        <button class="btn btn-sm btn-info text-white"><i class="fa fa-edit me-2"></i>Edit</button>
-                        <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash me-2"></i>Delete</button>
+                        <a href="<?=ROOT?>/schools/edit/<?=$school->id?>">
+                            <button class="btn btn-sm btn-info text-white"><i class="fa fa-edit me-2"></i>Edit</button>
+                        </a>
+                        <a href="<?=ROOT?>/schools/delete/<?=$school->id?>">
+                            <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash me-2"></i>Delete</button>
+                        </a>
                     </td>
                 </tr>
 
