@@ -3,7 +3,7 @@
 
 
 <div class="container container-fluid p-4 shadow mx-auto" style="max-width: 1000px">
-    <?php $this->view('includes/breadcrumb'); ?>
+    <?php $this->view('includes/breadcrumb', ['crumbs' => $crumbs]); ?>
     <div class="card-group justify-content-center">
         <form method="post" class="w-50">
             <h3>Add New School</h3>

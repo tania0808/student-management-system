@@ -3,7 +3,7 @@
 
 
 <div class="container container-fluid p-4 shadow mx-auto" style="max-width: 1000px">
-    <?php $this->view('includes/breadcrumb'); ?>
+    <?php $this->view('includes/breadcrumb', ['crumbs' => $crumbs]); ?>
     <div class="card-group justify-content-center">
         <table class="table table-striped table-hover">
             <tr>

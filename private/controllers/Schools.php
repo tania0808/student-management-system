@@ -9,8 +9,12 @@ class Schools extends Controller
         }
         $schools = new School();
         $data = $schools->findAll();
-
-        $this->view('schools', ['schools' => $data]);
+        $crumbs[] = ['Dashboard',  ROOT. '/'];
+        $crumbs[] = ['Schools',  ROOT. '/schools'];
+        $this->view('schools', [
+            'schools' => $data,
+            'crumbs'=>$crumbs
+        ]);
     }
 
     public function add()
@@ -35,8 +39,12 @@ class Schools extends Controller
                 $errors = $school->errors;
             }
         }
+        $crumbs[] = ['Dashboard',  ROOT. '/'];
+        $crumbs[] = ['Schools',  ROOT. '/schools'];
+        $crumbs[] = ['Add',  ROOT. '/schools/add'];
         $this->view('schools.add', [
-            'errors' => $errors
+            'errors' => $errors,
+            'crumbs'=>$crumbs
         ]);
     }
 
@@ -62,9 +70,13 @@ class Schools extends Controller
         }
         $row = $school->where('id', $id);
 
+        $crumbs[] = ['Dashboard', ROOT. '/'];
+        $crumbs[] = ['Schools', ROOT. '/schools'];
+        $crumbs[] = ['Edit',  ROOT. ''];
         $this->view('schools.edit', [
             'errors' => $errors,
-            'row'=>$row
+            'row'=>$row,
+            'crumbs'=>$crumbs
         ]);
     }
 
@@ -83,8 +95,12 @@ class Schools extends Controller
         }
         $row = $school->where('id', $id);
 
+        $crumbs[] = ['Dashboard',  ROOT. '/'];
+        $crumbs[] = ['Schools',  ROOT. '/schools'];
+        $crumbs[] = ['Delete', ''];
         $this->view('schools.delete', [
-            'row'=>$row
+            'row'=>$row,
+            'crumbs'=>$crumbs
         ]);
     }
 }
