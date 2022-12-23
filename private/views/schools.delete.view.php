@@ -5,8 +5,7 @@
 <div class="container container-fluid p-4 shadow mx-auto" style="max-width: 1000px">
     <?php $this->view('includes/breadcrumb', ['crumbs' => $crumbs]); ?>
     <div class="card-group justify-content-center">
-        <?php
-        if($row): ?>
+        <?php if($row): ?>
         <form method="post" class="w-50">
             <h3>Are you sure you want to delete ?!</h3>
             <div class="mb-3">

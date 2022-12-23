@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="nav-link text-reset" href="<?=ROOT?>/">
             <img src="<?=ROOT?>/images/logo.png" alt="logo" style="width: 50px">
-        MY SCHOOL
+            <?php echo Auth::getSchool_name();?>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

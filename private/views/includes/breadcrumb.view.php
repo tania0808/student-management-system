@@ -8,8 +8,6 @@
                 <li class="breadcrumb-item <?php echo $last[0] === $crumb[0] ? 'active' : '' ?>"><?= $crumb[0] ?></li>
             <?php } else { ?>
                 <li class="breadcrumb-item"><a href="<?= $crumb[1] ?>"><?= $crumb[0] ?></a></li>
-
-
             <?php } }} ?>
     </ol>
 </nav>

@@ -11,6 +11,7 @@ class Model extends Database
         }
     }
 
+
     public function where($column, $value)
     {
         $column = addslashes($column);
@@ -87,6 +88,7 @@ class Model extends Database
         $str = rtrim($str, ', ');
         $data['id'] = $id;
         $query = "UPDATE $this->table SET $str WHERE id = :id";
+        echo $this->query($query, $data);
         return $this->query($query, $data);
     }
 

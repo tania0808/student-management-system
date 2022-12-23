@@ -44,7 +44,11 @@ class User extends Model
         }
 
         // check if email exists
-        if ($this->where('email', $data['email'])) {
+        $row = $this->where('email', $data['email']);
+        echo "<pre>";
+        var_dump($row);
+        echo "</pre>";
+        if ($row) {
             $this->errors['email'] = 'That email is already in use!';
         }
 

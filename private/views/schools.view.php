@@ -1,7 +1,6 @@
 <?php $this->view('includes/header'); ?>
 <?php $this->view('includes/nav'); ?>
 
-
 <div class="container container-fluid p-4 shadow mx-auto" style="max-width: 1000px">
     <?php $this->view('includes/breadcrumb', ['crumbs' => $crumbs]); ?>
     <div class="card-group justify-content-center">
@@ -31,6 +30,9 @@
                         </a>
                         <a href="<?=ROOT?>/schools/delete/<?=$school->id?>">
                             <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash me-2"></i>Delete</button>
+                        </a>
+                        <a href="<?=ROOT?>/switch_school/<?=$school->id?>">
+                            <button class="btn btn-sm btn-success">Switch to<i class="fa-solid fa-chevron-right ms-2"></i></button>
                         </a>
                     </td>
                 </tr>
