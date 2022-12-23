@@ -27,3 +27,19 @@ function generateRandomString($length = 20) {
 function get_date($date){
     return date('jS M, Y', strtotime($date));
 }
+
+function show($data){
+    echo "<pre>";
+    print_r($data);
+    echo "</pre>";
+}
+
+function get_image($image, $gender = 'female'){
+    if(!file_exists($image)){
+        $image = ROOT . '/images/user_female.jpg';
+        if($gender == 'male'){
+            $image = ROOT . '/images/user_male.jpg';
+        }
+    }
+    return $image;
+}

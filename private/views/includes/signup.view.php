@@ -1,12 +1,5 @@
 <?php $this->view('includes/header'); ?>
 
-
-
-
-
-
-
-
     <div class="container-fluid">
         <form class="w-50 mx-auto mt-5" method="post">
             <div class="mb-3 text-center">
@@ -49,7 +42,9 @@
                     <option <?=get_select('rank', 'reception')?> value="reception">Reception</option>
                     <option <?=get_select('rank', 'lecturer')?> value="lecturer">Lecturer</option>
                     <option <?=get_select('rank', 'admin')?> value="admin">Admin</option>
+                    <?php if(Auth::getRank() == 'super_admin') :?>
                     <option <?=get_select('rank', 'super_admin')?> value="super_admin">Super Admin</option>
+                    <?php endif; ?>
                 </select>
                 <?php if(isset($errors['rank'])) {  ?>
                     <div class="alert alert-warning mt-2 p-1" role="alert"><?=$errors['rank']?></div>
@@ -68,7 +63,9 @@
                 <?php } ?>
             </div>
             <button type="submit" class="btn btn-primary float-end">Add user</button>
-            <button type="button" class="btn btn-danger">Cancel</button>
+            <a href="<?= ROOT ?>/users">
+                <button type="button" class="btn btn-danger">Cancel</button>
+            </a>
         </form>
     </div>
 
