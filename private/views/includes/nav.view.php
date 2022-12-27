@@ -23,6 +23,9 @@
                     <a class="nav-link" href="<?=ROOT?>/students">STUDENTS</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="<?=ROOT?>/classes">CLASSES</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="<?=ROOT?>/tests">TESTS</a>
                 </li>
             </ul>

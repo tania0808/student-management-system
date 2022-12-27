@@ -36,16 +36,21 @@
                 <?php } ?>
             </div>
             <div class="mb-3">
-                <select value="<?=get_var('rank')?>"  name="rank" id="rank" class="form-select" >
-                    <option <?=get_select('rank', '')?> value="">----Select a rank----</option>
-                    <option <?=get_select('rank', 'student')?> value="student">Student</option>
-                    <option <?=get_select('rank', 'reception')?> value="reception">Reception</option>
-                    <option <?=get_select('rank', 'lecturer')?> value="lecturer">Lecturer</option>
-                    <option <?=get_select('rank', 'admin')?> value="admin">Admin</option>
-                    <?php if(Auth::getRank() == 'super_admin') :?>
-                    <option <?=get_select('rank', 'super_admin')?> value="super_admin">Super Admin</option>
-                    <?php endif; ?>
-                </select>
+                <?php if($mode === 'students') { ?>
+                    <input type="text" class="form-control" value="student" hidden name="rank">
+                <?php } else { ?>
+                    <select value="<?=get_var('rank')?>" name="rank" id="rank" class="form-select" >
+                        <option <?=get_select('rank', '')?> value="">----Select a rank----</option>
+                        <option <?=get_select('rank', 'student')?> value="student">Student</option>
+                        <option <?=get_select('rank', 'reception')?> value="reception">Reception</option>
+                        <option <?=get_select('rank', 'lecturer')?> value="lecturer">Lecturer</option>
+                        <option <?=get_select('rank', 'admin')?> value="admin">Admin</option>
+
+                        <?php if(Auth::getRank() == 'super_admin') :?>
+                            <option <?=get_select('rank', 'super_admin')?> value="super_admin">Super Admin</option>
+                        <?php endif; ?>
+                    </select>
+                <?php } ?>
                 <?php if(isset($errors['rank'])) {  ?>
                     <div class="alert alert-warning mt-2 p-1" role="alert"><?=$errors['rank']?></div>
                 <?php } ?>
@@ -63,9 +68,16 @@
                 <?php } ?>
             </div>
             <button type="submit" class="btn btn-primary float-end">Add user</button>
-            <a href="<?= ROOT ?>/users">
-                <button type="button" class="btn btn-danger">Cancel</button>
-            </a>
+
+            <?php if($mode === 'students') { ?>
+                <a href="<?= ROOT ?>/students">
+                    <button type="button" class="btn btn-danger">Cancel</button>
+                </a>
+            <?php } else { ?>
+                <a href="<?= ROOT ?>/users">
+                    <button type="button" class="btn btn-danger">Cancel</button>
+                </a>
+            <?php } ?>
         </form>
     </div>
 
