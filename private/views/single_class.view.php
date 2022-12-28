@@ -35,10 +35,39 @@
                     <a class="nav-link <?=$page_tab == 'tests' ? 'active' : ''; ?>" href="<?=ROOT?>/single_class/<?=$row->class_id?>?tab=tests">Tests</a>
                 </li>
             </ul>
-            <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i>&nbsp</span>
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
-            </div>
+
+            <?php
+            switch ($page_tab){
+                case 'lecturers':
+                    include ($this->views_path('class-tab-lecturers'));
+                    break;
+
+                case 'students':
+                    include($this->views_path('class-tab-students'));
+                    break;
+
+                case 'tests':
+                    include($this->views_path('class-tab-tests'));
+                    break;
+
+                case 'lecturers_add':
+                    include($this->views_path('class-tab-lecturers-add'));
+                    break;
+
+
+                case 'students_add':
+                    include($this->views_path('class-tab-students-add'));
+                    break;
+
+
+                case 'tests_add':
+                    include($this->views_path('class-tab-tests-add'));
+                    break;
+
+
+                default:
+            }
+            ?>
         </div>
         <?php else :?>
         <h3 class="text-center">That profile was not found !</h3>
