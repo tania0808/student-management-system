@@ -57,9 +57,9 @@ class Model extends Database
         return $data;
     }
 
-    public function findAll()
+    public function findAll($order = 'desc')
     {
-        $query = "SELECT * FROM $this->table";
+        $query = "SELECT * FROM $this->table ORDER BY id $order";
         $data = $this->query($query);
 
         // run functions after select

@@ -6,6 +6,9 @@
 class Auth
 {
     public static function authenticate($row) {
+        $school = new School();
+        $school_row = $school->where('school_id', $row->school_id);
+        $row->school_name = $school_row[0]->school_name;
         $_SESSION['USER'] = $row;
     }
 
@@ -45,9 +48,9 @@ class Auth
 
             if($school_row){
                 $school_row = $school_row[0];
-                $arr['school_id'] = $school_row->id;
+                $arr['school_id'] = $school_row->school_id;
                 if(!$user->update($_SESSION['USER']->id, $arr)){
-                    $_SESSION['USER']->school_id = $school_row->id;
+                    $_SESSION['USER']->school_id = $school_row->school_id;
                     $_SESSION['USER']->school_name = $school_row->school_name;
                 }
 
