@@ -4,7 +4,7 @@
     </div>
 <?php } ?>
 <form action="" method="post" class="form mt-3 mx-auto w-50">
-    <h4>Add Lecturer</h4>
+    <h4>Remove Lecturer</h4>
     <input value="<?=get_var('name') ?>" autofocus class="form-control" type="text" name="name" placeholder="Lecturer Name">
     <button class="btn btn-primary mt-2 float-end" name="search">Search</button>
     <a href="<?= ROOT ?>/single_class/<?= $row->class_id ?>?tab=lecturers"">

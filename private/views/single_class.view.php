@@ -9,18 +9,10 @@
                 <h4 class="text-center mb-3"><?= ucwords(escape($row->class_name)) ?></h4>
 
                 <table class="table table-hover table-striped table-light table-bordered">
-                    <tr>
-                        <th>Class name:</th>
-                        <td><?= escape($row->class_name) ?></td>
-                    </tr>
-                    <tr>
-                        <th>Created by :</th>
-                        <td><?= escape($row->user->first_name) ?> <?= escape($row->user->last_name) ?></td>
-                    </tr>
-                    <tr>
-                        <th>Date Created:</th>
-                        <td><?= escape(get_date($row->date)) ?></td>
-                    </tr>
+                    <th>Created by :</th>
+                    <td><?= escape($row->user->first_name) ?> <?= escape($row->user->last_name) ?></td>
+                    <th>Date Created:</th>
+                    <td><?= escape(get_date($row->date)) ?></td>
                 </table>
             </div>
             <div class="container-fluid">
@@ -28,8 +20,8 @@
                     <li class="nav-item">
                         <a class="nav-link <?= $page_tab == 'lecturers' ? 'active' : ''; ?>"
                            href="<?= ROOT ?>/single_class/<?= $row->class_id ?>?tab=lecturers">Lecturers</a>
-                </li>
-                <li class=" nav-item">
+                    </li>
+                    <li class=" nav-item">
                         <a class="nav-link <?= $page_tab == 'students' ? 'active' : ''; ?>"
                            href="<?= ROOT ?>/single_class/<?= $row->class_id ?>?tab=students">Students</a>
                     </li>
@@ -55,6 +47,10 @@
 
                     case 'lecturers_add':
                         include($this->views_path('class-tab-lecturers-add'));
+                        break;
+
+                    case 'lecturers_remove':
+                        include($this->views_path('class-tab-lecturers-remove'));
                         break;
 
 

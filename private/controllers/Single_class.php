@@ -20,14 +20,18 @@ class Single_class extends Controller
         $results = false;
         $error = '';
 
-        if($page_tab == 'lecturers_add' && count($_POST) > 0) {
+        if(($page_tab == 'lecturers_add' || $page_tab == 'lecturers_remove') && count($_POST) > 0) {
             if(isset($_POST['search'])){
                 // find lecturer
                 $user = new User();
-                $name = "%" . trim($_POST['name']) . "%";
-                $query = "SELECT * FROM users WHERE (last_name like :lname || first_name like :fname) && rank = 'lecturer' LIMIT 10";
-                $results = $user->query($query, ['fname'=>$name, 'lname'=>$name]);
-                //show($_SESSION['USER']);
+                if(trim($_POST['name']) == ''){
+                    $error = 'Enter user name !!!';
+                } else {
+                    $name = "%" . trim($_POST['name']) . "%";
+                    $query = "SELECT * FROM users WHERE (last_name like :lname || first_name like :fname) && rank = 'lecturer' LIMIT 10";
+                    $results = $user->query($query, ['fname'=>$name, 'lname'=>$name]);
+                    //show($_SESSION['USER']);
+                }
             }
 
             if(isset($_POST['select'])){
@@ -39,7 +43,7 @@ class Single_class extends Controller
                 $arr['disabled'] =  0;
                 $arr['date'] =  date("y-m-d h:i:s");
                 $is_user_exists = $lecturer->where('user_id', $user_id);
-                if(count($is_user_exists) > 0){
+                if($is_user_exists){
                     $error = 'User already exists !';
                 } else {
 
@@ -47,6 +51,18 @@ class Single_class extends Controller
                     $this->redirect("single_class/$id?tab=lecturers");
                 }
             }
+
+            if(isset($_POST['remove'])){
+                $user_id = $_POST['remove'];
+                $is_user_exists = $lecturer->where('user_id', $user_id);
+                if(!$is_user_exists){
+                    $error = "User in not added, so you can't remove him ";
+                } else {
+                    $lecturer->delete('user_id', $user_id);
+                    $this->redirect("single_class/$id?tab=lecturers");
+                }
+            }
+
         } elseif($page_tab == 'lecturers') {
             // display lecturers
             $lecturers = $lecturer->where('class_id', $id);

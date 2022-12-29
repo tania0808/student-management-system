@@ -12,10 +12,10 @@ class Model extends Database
     }
 
 
-    public function where($column, $value)
+    public function where($column, $value, $orderby = 'desc')
     {
         $column = addslashes($column);
-        $query = "SELECT * FROM $this->table WHERE $column = :value";
+        $query = "SELECT * FROM $this->table WHERE $column = :value ORDER BY id $orderby";
 
         $data = $this->query($query, [
             'value' => $value

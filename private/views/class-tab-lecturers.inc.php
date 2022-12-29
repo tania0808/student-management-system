@@ -4,9 +4,15 @@
         <input type="text" class="form-control" placeholder="Search" aria-label="Search"
                aria-describedby="addon-wrapping">
     </div>
-    <a href="<?= ROOT ?>/single_class/<?= $row->class_id ?>?tab=lecturers_add&select=true">
-        <button class="btn btn-sm btn-primary"><i class="fa fa-plus me-2"></i>Add new lecturer</button>
-    </a>
+    <div>
+        <a href="<?= ROOT ?>/single_class/<?= $row->class_id ?>?tab=lecturers_add&select=true">
+            <button class="btn btn-sm btn-primary"><i class="fa fa-plus me-2"></i>Add New</button>
+        </a>
+        <a href="<?= ROOT ?>/single_class/<?= $row->class_id ?>?tab=lecturers_remove&select=true">
+            <button class="btn btn-sm btn-danger"><i class="fa fa-minus me-2"></i>Remove</button>
+        </a>
+    </div>
+
 </div>
 <div class="card-group">
     <?php if (is_array($lecturers)) {
