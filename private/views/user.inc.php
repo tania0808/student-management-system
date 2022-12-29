@@ -6,5 +6,8 @@
         <h5 class="card-title"><?=$user->first_name?> <?=$user->last_name?></h5>
         <p class="card-text">Rank : <?=ucfirst(str_replace('_', ' ', $user->rank))?> </p>
         <a href="profile/<?=$user->student_id?>" class="btn btn-primary">Profile</a>
+        <?php if(isset($_GET['select'])){ ?>
+            <button name="select" value="<?=$user->student_id?>" class="btn btn-danger float-end">Select</button>
+        <?php } ?>
     </div>
 </div>

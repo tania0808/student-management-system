@@ -19,7 +19,6 @@
 
             <?php
             if($classes){
-                show($_SESSION['USER']);
             foreach ($classes as $class) {?>
                 <tr>
                     <td>
