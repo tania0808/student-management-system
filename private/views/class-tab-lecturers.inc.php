@@ -15,7 +15,8 @@
 
 </div>
 <div class="card-group">
-    <?php if (is_array($lecturers)) {
+    <?php
+    if (is_array($lecturers)) {
         foreach ($lecturers as $user) {
             $user = $user->user; ?>
             <?php include($this->views_path('user')); ?>

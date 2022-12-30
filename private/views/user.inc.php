@@ -10,7 +10,7 @@
             <button name="select" value="<?=$user->student_id?>" class="btn btn-danger float-end">Select</button>
         <?php } ?>
         <?php if(isset($_GET['select']) && $_GET['tab'] == 'lecturers_remove'){ ?>
-            <button name="remove" value="<?=$user->student_id?>" class="btn btn-danger float-end">Remove</button>
+            <button name="select" value="<?=$user->student_id?>" class="btn btn-danger float-end">Remove</button>
         <?php } ?>
     </div>
 </div>

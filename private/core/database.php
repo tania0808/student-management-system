@@ -23,20 +23,32 @@ class Database
     {
         $connection = $this->connect();
         $statement = $connection->prepare($query);
+        $result = false;
+
         if($statement){
             $check = $statement->execute($data);
             if($check){
                 if($data_type == "object") {
-                    $data = $statement->fetchAll(PDO::FETCH_OBJ);
+                    $result = $statement->fetchAll(PDO::FETCH_OBJ);
                 } else {
-                    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
-                }
-
-                if(is_array($data) && count($data) > 0){
-                    return $data;
+                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 }
             }
         }
+        // run functions after select
+        if(is_array($result)){
+            if(property_exists($this, 'afterSelect')){
+                foreach ($this->afterSelect as $func)
+                {
+                    $result = $this->$func($result);
+                }
+            }
+        }
+
+        if(is_array($result) && count($result) > 0){
+            return $result;
+        }
+
         return false;
     }
 }
