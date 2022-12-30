@@ -45,11 +45,11 @@
                         include($this->views_path('class-tab-tests'));
                         break;
 
-                    case 'lecturers_add':
+                    case 'lectureradd':
                         include($this->views_path('class-tab-lecturers-add'));
                         break;
 
-                    case 'lecturers_remove':
+                    case 'lecturerremove':
                         include($this->views_path('class-tab-lecturers-remove'));
                         break;
 

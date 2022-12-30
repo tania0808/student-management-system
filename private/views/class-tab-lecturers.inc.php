@@ -5,10 +5,10 @@
                aria-describedby="addon-wrapping">
     </div>
     <div>
-        <a href="<?= ROOT ?>/single_class/<?= $row->class_id ?>?tab=lecturers_add&select=true">
+        <a href="<?= ROOT ?>/single_class/lectureradd/<?= $row->class_id ?>?select=true">
             <button class="btn btn-sm btn-primary"><i class="fa fa-plus me-2"></i>Add New</button>
         </a>
-        <a href="<?= ROOT ?>/single_class/<?= $row->class_id ?>?tab=lecturers_remove&select=true">
+        <a href="<?= ROOT ?>/single_class/lecturerremove/<?= $row->class_id ?>?select=true">
             <button class="btn btn-sm btn-danger"><i class="fa fa-minus me-2"></i>Remove</button>
         </a>
     </div>
