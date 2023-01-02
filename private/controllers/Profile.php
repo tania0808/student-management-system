@@ -3,6 +3,8 @@
 class Profile extends Controller
 {
     function index($id = ''){
+        $id = trim($id == '') ? Auth::getStudent_id() : $id;
+
         $user = new User();
         $row = $user->first('student_id', $id);
         $crumbs[] = ['Dashboard', ROOT. '/'];
