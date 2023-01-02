@@ -21,6 +21,8 @@
             $user = $user->user; ?>
             <?php include($this->views_path('user')); ?>
         <?php }
-    } ?>
+    } else { ?>
+        <h3>No lecturers were found in this class</h3>
+    <?php } ?>
 </div>
 

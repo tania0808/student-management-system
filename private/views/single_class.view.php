@@ -54,8 +54,12 @@
                         break;
 
 
-                    case 'students_add':
+                    case 'studentadd':
                         include($this->views_path('class-tab-students-add'));
+                        break;
+
+                    case 'studentremove':
+                        include($this->views_path('class-tab-students-remove'));
                         break;
 
 
