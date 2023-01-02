@@ -35,7 +35,7 @@
                         <?php echo Auth::getFirst_Name();?>
                     </a>
                     <ul class="dropdown-menu w-25 dropdown-menu-end">
-                        <li><a class="dropdown-item" href="<?=ROOT?>/profile">Profile</a></li>
+                        <li><a class="dropdown-item" href="<?=ROOT?>/profile?tab=infos">Profile</a></li>
                         <li><a class="dropdown-item" href="<?=ROOT?>/">Dashboard</a></li>
                         <div class="dropdown-divider"></div>
                         <li><a class="dropdown-item" href="<?=ROOT?>/logout">Log out</a></li>

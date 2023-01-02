@@ -8,7 +8,8 @@ class Classes extends Controller
            $this->redirect('login');
         }
         $classes = new Classe();
-        $data = $classes->findAll();
+        $school_id = Auth::getSchool_id();
+        $data = $classes->query("SELECT  * FROM classes WHERE school_id = :school_id ORDER BY id DESC " , ['school_id'=>$school_id]);
         $crumbs[] = ['Dashboard',  ROOT. '/'];
         $crumbs[] = ['Classes',  ROOT. '/classes'];
         $this->view('classes', [

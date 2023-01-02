@@ -30,6 +30,10 @@
                         <td><?=escape(ucfirst($user->gender))?></td>
                     </tr>
                     <tr>
+                        <th>Rank:</th>
+                        <td><?=escape(ucfirst($user->rank))?></td>
+                    </tr>
+                    <tr>
                         <th>Date Created:</th>
                         <td><?=escape(get_date($user->date))?></td>
                     </tr>
@@ -39,24 +43,32 @@
         <div class="container-fluid">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Basic Info</a>
+                    <a class="nav-link <?=$page_tab == 'infos' ? 'active' : ''?>" href="<?=ROOT?>/profile/<?=$user->student_id?>?tab=infos">Basic Info</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Classes</a>
+                    <a class="nav-link <?=$page_tab  == 'classes' ? 'active' : ''?>" href="<?=ROOT?>/profile/<?=$user->student_id?>?tab=classes">Classes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Tests</a>
+                    <a class="nav-link <?=$page_tab  == 'tests' ? 'active' : ''?>" href="<?=ROOT?>/profile/<?=$user->student_id?>?tab=tests">Tests</a>
                 </li>
             </ul>
-            <div class="input-group flex-nowrap mt-3">
-                <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i>&nbsp</span>
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
-            </div>
+            <?php
+            switch ($page_tab){
+                case 'infos':
+                    include ($this->views_path('profile-tab-infos'));
+                    break;
+                case 'classes':
+                    include ($this->views_path('profile-tab-classes'));
+                    break;
+                case 'tests':
+                    include ($this->views_path('profile-tab-tests'));
+                    break;
+            }
+            ?>
         </div>
         <?php else :?>
         <h3 class="text-center">That profile was not found !</h3>
         <?php endif;?>
-        <?php show($user); ?>
     </div>
 
 
