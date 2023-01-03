@@ -5,9 +5,11 @@
         <th>Created by</th>
         <th>Created at</th>
         <th>
+            <?php if(Auth::access('lecturer')): ?>
             <a href="<?= ROOT ?>/classes/add">
                 <button class="btn btn-sm btn-primary"><i class="fa fa-plus me-2"></i>Add new</button>
             </a>
+            <?php endif;?>
         </th>
 
     </tr>
@@ -25,7 +27,7 @@
                 <td><?= $class->user->first_name ?> <?= $class->user->last_name ?></td>
                 <td><?= get_date($class->date) ?></td>
                 <td>
-                    <?php if(Auth::i_own_content($classes)): ?>
+                    <?php if(Auth::access('lecturer')): ?>
                     <a href="<?= ROOT ?>/classes/edit/<?= $class->id ?>">
                         <button class="btn btn-sm btn-info text-white"><i class="fa fa-edit me-2"></i>Edit</button>
                     </a>

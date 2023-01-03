@@ -8,8 +8,29 @@ class Classes extends Controller
             $this->redirect('login');
         }
         $classes = new Classe();
+
         $school_id = Auth::getSchool_id();
-        $data = $classes->query("SELECT  * FROM classes WHERE school_id = :school_id ORDER BY id DESC ", ['school_id' => $school_id]);
+        if (Auth::access('admin')) {
+            $data = $classes->query("SELECT  * FROM classes WHERE school_id = :school_id ORDER BY id DESC ", ['school_id' => $school_id]);
+        } else {
+            $class = new Classe();
+            $mytable = 'students';
+
+            if (Auth::getRank() == 'lecturer') {
+                $mytable = 'lecturers';
+            }
+            $student = new Student();
+
+            $query = "SELECT * FROM $mytable WHERE user_id = :user_id && disabled = 0";
+            $arr['stud_classes'] = $class->query($query, ['user_id' => Auth::getStudent_id()]);
+            $data = [];
+
+            if ($arr['stud_classes']) {
+                foreach ($arr['stud_classes'] as $key => $value) {
+                    $data[] = $class->first('class_id', $value->class_id);
+                }
+            }
+        }
         $crumbs[] = ['Dashboard', ROOT . '/'];
         $crumbs[] = ['Classes', ROOT . '/classes'];
         $this->view('classes', [
@@ -18,7 +39,8 @@ class Classes extends Controller
         ]);
     }
 
-    public function add()
+    public
+    function add()
     {
         if (!Auth::isLoggedIn()) {
             $this->redirect('login');
@@ -49,7 +71,8 @@ class Classes extends Controller
         ]);
     }
 
-    public function edit($id = null)
+    public
+    function edit($id = null)
     {
         if (!Auth::isLoggedIn()) {
             $this->redirect('login');
@@ -73,7 +96,7 @@ class Classes extends Controller
         $crumbs[] = ['Classes', ROOT . '/classes'];
         $crumbs[] = ['Edit', ROOT . ''];
 
-        if(Auth::access('lecturer') && Auth::i_own_content($row)){
+        if (Auth::access('lecturer') && Auth::i_own_content($row)) {
             $this->view('classes.edit', [
                 'errors' => $errors,
                 'row' => $row,
@@ -86,7 +109,8 @@ class Classes extends Controller
 
     }
 
-    public function delete($id = null)
+    public
+    function delete($id = null)
     {
         if (!Auth::isLoggedIn()) {
             $this->redirect('login');
@@ -103,7 +127,7 @@ class Classes extends Controller
         $crumbs[] = ['Classes', ROOT . '/classes'];
         $crumbs[] = ['Delete', ''];
 
-        if(Auth::access('lecturer') && Auth::i_own_content($row)){
+        if (Auth::access('lecturer') && Auth::i_own_content($row)) {
             $this->view('classes.delete', [
                 'row' => $row,
                 'crumbs' => $crumbs
