@@ -45,12 +45,14 @@
                 <li class="nav-item">
                     <a class="nav-link <?=$page_tab == 'infos' ? 'active' : ''?>" href="<?=ROOT?>/profile/<?=$user->student_id?>?tab=infos">Basic Info</a>
                 </li>
+                <?php  if (Auth::access('lecturer') || Auth::i_own_content($user)) : ?>
                 <li class="nav-item">
                     <a class="nav-link <?=$page_tab  == 'classes' ? 'active' : ''?>" href="<?=ROOT?>/profile/<?=$user->student_id?>?tab=classes">Classes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?=$page_tab  == 'tests' ? 'active' : ''?>" href="<?=ROOT?>/profile/<?=$user->student_id?>?tab=tests">Tests</a>
                 </li>
+                <?php endif; ?>
             </ul>
             <?php
             switch ($page_tab){
@@ -58,10 +60,18 @@
                     include ($this->views_path('profile-tab-infos'));
                     break;
                 case 'classes':
+                    if (Auth::access('lecturer') || Auth::i_own_content($user)){
                     include ($this->views_path('profile-tab-classes'));
+                    } else {
+                        $this->view('access-denied-message');
+                    }
                     break;
                 case 'tests':
-                    include ($this->views_path('profile-tab-tests'));
+                    if (Auth::access('lecturer') || Auth::i_own_content($user)){
+                        include ($this->views_path('profile-tab-tests'));
+                    } else {
+                        $this->view('access-denied-message');
+                    }
                     break;
             }
             ?>
