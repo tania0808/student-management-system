@@ -4,6 +4,10 @@ class Signup extends Controller
 {
     function index()
     {
+        if(!Auth::isLoggedIn()){
+            $this->redirect('login');
+        }
+
         $errors = [];
         $mode =  isset($_GET['mode']) ? $_GET['mode'] : 'users';
 
@@ -12,7 +16,12 @@ class Signup extends Controller
 
             if($user->validate($_POST)){
                 $_POST['date'] = date("Y-m-d H:i:s");
-                $user->insert($_POST);
+                if(Auth::access('reception')){
+                    if($_POST['rank'] == 'super_admin' && $_SESSION['USER']->rank != 'super_admin' ){
+                        $_POST['rank'] == 'admin';
+                    }
+                    $user->insert($_POST);
+                }
                 $redirect = $mode == 'students' ? 'students' : 'users';
                 $this->redirect($redirect);
             } else {
@@ -20,10 +29,14 @@ class Signup extends Controller
                 $errors = $user->errors;
             }
         }
+        if(Auth::access('reception')){
+            $this->view('includes/signup', [
+                'errors'=>$errors,
+                'mode' => $mode,
+            ]);
+        } else {
+            $this->view('access-denied');
+        }
 
-        $this->view('includes/signup', [
-            'errors'=>$errors,
-            'mode' => $mode,
-        ]);
     }
 }

@@ -3,29 +3,32 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-4 col-md-6" style="margin-top: 20px">
-            <div class="card border-primary">
-                <div class="card-body bg-primary text-white">
-                    <div class="row">
-                        <div class="col-3 d-flex align-items-center">
-                            <i class="fa fa-graduation-cap fa-3x"></i>
-                        </div>
-                        <div class="col-9 text-right">
-                            <h1>10</h1>
-                            <h4>Schools</h4>
+        <?php if(Auth::access('super_admin')): ?>
+            <div class="col-lg-4 col-md-6" style="margin-top: 20px">
+                <div class="card border-primary">
+                    <div class="card-body bg-primary text-white">
+                        <div class="row">
+                            <div class="col-3 d-flex align-items-center">
+                                <i class="fa fa-graduation-cap fa-3x"></i>
+                            </div>
+                            <div class="col-9 text-right">
+                                <h1>10</h1>
+                                <h4>Schools</h4>
+                            </div>
                         </div>
                     </div>
+                    <a href="schools" class="text-decoration-none">
+                        <div class="card-footer bg-light text-primary">
+                            <span class="float-left">View all schools</span>
+                            <span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
                 </div>
-                <a href="schools" class="text-decoration-none">
-                    <div class="card-footer bg-light text-primary">
-                        <span class="float-left">View all schools</span>
-                        <span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
             </div>
-        </div>
+        <?php endif; ?>
 
+        <?php if(Auth::access('reception')): ?>
         <div class="col-lg-4 col-md-6" style="margin-top: 20px">
             <div class="card border-secondary">
                 <div class="card-body bg-secondary text-white">
@@ -48,7 +51,9 @@
                 </a>
             </div>
         </div>
+        <?php endif; ?>
 
+        <?php if(Auth::access('reception')): ?>
         <div class="col-lg-4 col-md-6" style="margin-top: 20px">
             <div class="card border-success">
                 <div class="card-body bg-success text-white">
@@ -71,6 +76,7 @@
                 </a>
             </div>
         </div>
+        <?php endif; ?>
 
         <div class="col-lg-4 col-md-6" style="margin-top: 20px">
             <div class="card border-danger">
@@ -96,8 +102,32 @@
         </div>
 
         <div class="col-lg-4 col-md-6" style="margin-top: 20px">
-            <div class="card border-warning">
-                <div class="card-body bg-warning text-white">
+            <div class="card border-danger">
+                <div class="card-body bg-danger text-white">
+                    <div class="row">
+                        <div class="col-3 d-flex align-items-center">
+                            <i class="fa fa-book fa-3x"></i>
+                        </div>
+                        <div class="col-9 text-right">
+                            <h1>60</h1>
+                            <h4>Tests</h4>
+                        </div>
+                    </div>
+                </div>
+                <a href="tests" class="text-decoration-none">
+                    <div class="card-footer bg-light text-danger">
+                        <span class="float-left">View all tests</span>
+                        <span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <?php if(Auth::access('admin')): ?>
+        <div class="col-lg-4 col-md-6" style="margin-top: 20px">
+            <div class="card border-dark">
+                <div class="card-body bg-light text-dark">
                     <div class="row">
                         <div class="col-3 d-flex align-items-center">
                             <i class="fa fa-chart-line fa-3x"></i>
@@ -109,7 +139,7 @@
                     </div>
                 </div>
                 <a href="tests" class="text-decoration-none">
-                    <div class="card-footer bg-light text-warning">
+                    <div class="card-footer bg-light text-dark">
                         <span class="float-left">View statistics</span>
                         <span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
@@ -117,10 +147,12 @@
                 </a>
             </div>
         </div>
+        <?php endif; ?>
 
+        <?php if(Auth::access('admin')): ?>
         <div class="col-lg-4 col-md-6" style="margin-top: 20px">
-            <div class="card border-warning">
-                <div class="card-body bg-warning text-white">
+            <div class="card border-dark">
+                <div class="card-body bg-dark text-white">
                     <div class="row">
                         <div class="col-3 d-flex align-items-center">
                             <i class="fa fa-gear fa-3x"></i>
@@ -132,7 +164,7 @@
                     </div>
                 </div>
                 <a href="tests" class="text-decoration-none">
-                    <div class="card-footer bg-light text-warning">
+                    <div class="card-footer bg-light text-dark">
                         <span class="float-left">View all settings</span>
                         <span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
@@ -140,6 +172,7 @@
                 </a>
             </div>
         </div>
+        <?php endif; ?>
 
         <div class="col-lg-4 col-md-6" style="margin-top: 20px">
             <div class="card border-warning">
@@ -165,8 +198,8 @@
         </div>
 
         <div class="col-lg-4 col-md-6" style="margin-top: 20px">
-            <div class="card border-warning">
-                <div class="card-body bg-warning text-white">
+            <div class="card border-info">
+                <div class="card-body bg-info text-white">
                     <div class="row">
                         <div class="col-3 d-flex align-items-center">
                             <i class="fa-solid fa-right-from-bracket fa-3x"></i>
@@ -178,7 +211,7 @@
                     </div>
                 </div>
                 <a href="logout" class="text-decoration-none">
-                    <div class="card-footer bg-light text-warning">
+                    <div class="card-footer bg-light text-info">
                         <span class="float-left">Logout</span>
                         <span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>

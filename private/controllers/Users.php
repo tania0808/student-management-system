@@ -12,10 +12,16 @@ class Users extends Controller
         $users = $user->query("SELECT  * FROM users WHERE school_id = :school_id && rank not in ('student') ORDER BY id DESC ", ['school_id'=>$school_id]);
         $crumbs[] = ['Dashboard', ROOT. '/'];
         $crumbs[] = ['Staff', ROOT. ''];
-        $this->view('users', [
-            'users' => $users,
-            'crumbs' => $crumbs,
-            'mode' => 'users',
-        ]);
+
+        if(Auth::access('reception')){
+            $this->view('users', [
+                'users' => $users,
+                'crumbs' => $crumbs,
+                'mode' => 'users',
+            ]);
+        } else {
+            $this->view('access-denied');
+        }
+
     }
 }

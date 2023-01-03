@@ -38,7 +38,7 @@ class Profile extends Controller
                 $data['lect_classes'] = $lecturer->query($query, ['user_id' => $id]);
                 $data['lecturer_classes'] = [];
 
-                if(isset($data['lect_classes']) ){
+                if($data['lect_classes']){
                     foreach ($data['lect_classes'] as $key => $value){
                         $data['lecturer_classes'][] = $class->first('class_id', $value->class_id);
                     }

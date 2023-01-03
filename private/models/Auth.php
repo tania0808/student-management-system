@@ -59,4 +59,77 @@ class Auth
         }
         return false;
     }
+
+    public static function access($rank = 'student') {
+        if(!isset($_SESSION['USER'])){
+            return false;
+        }
+
+        $logged_in_rank = $_SESSION['USER']->rank;
+
+        $RANK['super_admin'] = ['super_admin', 'admin', 'lecturer', 'reception', 'student'];
+        $RANK['admin']       = ['admin', 'lecturer', 'reception', 'student'];
+        $RANK['reception']   = ['reception', 'student'];
+        $RANK['lecturer']    = ['lecturer', 'student'];
+        $RANK['student']     = ['student'];
+
+
+        if(!isset($RANK[$logged_in_rank])){
+            return false;
+        }
+
+        if(in_array($rank, $RANK[$logged_in_rank])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function i_own_content($row = false) {
+        if(!isset($_SESSION['USER'])){
+            return false;
+        }
+
+        if(isset($row->user_id)){
+            if($_SESSION['USER']->user_id == $row->user_id){
+                return true;
+            }
+        }
+        $allowed = ['super_admin', 'admin'];
+
+        if(in_array($_SESSION['USER']->rank, $allowed)){
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
