@@ -90,8 +90,8 @@ class Auth
             return false;
         }
 
-        if(isset($row->user_id)){
-            if($_SESSION['USER']->user_id == $row->user_id){
+        if(isset($row->student_id)){
+            if($_SESSION['USER']->student_id == $row->student_id){
                 return true;
             }
         }

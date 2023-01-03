@@ -2,24 +2,24 @@
 
 class Profile extends Controller
 {
-    function index($id = ''){
+    function index($id = '')
+    {
         $id = trim($id == '') ? Auth::getStudent_id() : $id;
-
 
         $user = new User();
         $row = $user->first('student_id', $id);
-        $crumbs[] = ['Dashboard', ROOT. '/'];
-        if($row) {
+        $crumbs[] = ['Dashboard', ROOT . '/'];
+        if ($row) {
             $crumbs[] = ['Profile', ROOT . '/profile/' . $row->student_id];
             $crumbs[] = [$row->first_name, ROOT . ''];
         }
 
-        $data['page_tab'] = isset($_GET['tab']) ?  $_GET['tab'] : 'infos';
+        $data['page_tab'] = isset($_GET['tab']) ? $_GET['tab'] : 'infos';
 
-        if($data['page_tab'] == 'classes'){
+        if ($data['page_tab'] == 'classes') {
             $class = new Classe();
 
-            if($row->rank == 'student'){
+            if ($row->rank == 'student') {
 
                 $student = new Student();
                 $query = "SELECT * FROM students WHERE user_id = :user_id && disabled = 0";
@@ -27,8 +27,8 @@ class Profile extends Controller
 
                 $data['student_classes'] = [];
 
-                if($data['stud_classes']){
-                    foreach ($data['stud_classes'] as $key => $value){
+                if ($data['stud_classes']) {
+                    foreach ($data['stud_classes'] as $key => $value) {
                         $data['student_classes'][] = $class->first('class_id', $value->class_id);
                     }
                 }
@@ -38,21 +38,21 @@ class Profile extends Controller
                 $data['lect_classes'] = $lecturer->query($query, ['user_id' => $id]);
                 $data['lecturer_classes'] = [];
 
-                if($data['lect_classes']){
-                    foreach ($data['lect_classes'] as $key => $value){
+                if ($data['lect_classes']) {
+                    foreach ($data['lect_classes'] as $key => $value) {
                         $data['lecturer_classes'][] = $class->first('class_id', $value->class_id);
                     }
                 }
             }
-
-
         }
-
-
         $data['user'] = $row;
         $data['crumbs'] = $crumbs;
         $data['id'] = $id;
+        if (Auth::access('reception') || Auth::i_own_content($row)) {
+            $this->view('profile', $data);
+        } else {
+            $this->view('access-denied');
+        }
 
-        $this->view('profile', $data);
     }
 }
