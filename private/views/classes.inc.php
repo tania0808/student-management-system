@@ -1,20 +1,16 @@
-<table class="table table-striped table-hover mt-5">
+<table class="table table-striped table-hover mt-2">
     <tr>
         <th></th>
         <th>Class name</th>
         <th>Created by</th>
         <th>Created at</th>
         <th>
-            <?php if(Auth::access('lecturer')): ?>
-            <a href="<?= ROOT ?>/classes/add">
-                <button class="btn btn-sm btn-primary"><i class="fa fa-plus me-2"></i>Add new</button>
-            </a>
-            <?php endif;?>
+
         </th>
 
     </tr>
 
-    <?php if (isset($classes)) {
+    <?php if(is_array($classes)) {
         foreach ($classes as $class) { ?>
             <tr>
                 <td>
@@ -40,6 +36,6 @@
 
         <?php }
     } else {
-        echo "No classes were found at this time";
+        echo "<h4>No classes were found at this time</h4>";
     } ?>
 </table>

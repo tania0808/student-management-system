@@ -11,7 +11,14 @@ class Classes extends Controller
 
         $school_id = Auth::getSchool_id();
         if (Auth::access('admin')) {
-            $data = $classes->query("SELECT  * FROM classes WHERE school_id = :school_id ORDER BY id DESC ", ['school_id' => $school_id]);
+            $query = "SELECT  * FROM classes WHERE school_id = :school_id ORDER BY id DESC ";
+            $arr =  ['school_id' => $school_id];
+            if(isset($_GET['search'])){
+                $find = '%' . $_GET['search'] . '%';
+                $query = "SELECT  * FROM classes WHERE school_id = :school_id && class_name like :class_name ORDER BY id DESC ";
+                $arr = ['school_id'=>$school_id, 'class_name' => $find];
+            }
+            $data = $classes->query($query, $arr);
         } else {
             $class = new Classe();
             $mytable = 'students';
@@ -19,7 +26,6 @@ class Classes extends Controller
             if (Auth::getRank() == 'lecturer') {
                 $mytable = 'lecturers';
             }
-            $student = new Student();
 
             $query = "SELECT * FROM $mytable WHERE user_id = :user_id && disabled = 0";
             $arr['stud_classes'] = $class->query($query, ['user_id' => Auth::getStudent_id()]);
