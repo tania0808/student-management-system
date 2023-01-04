@@ -27,26 +27,27 @@ class Classes extends Controller
                 $mytable = 'lecturers';
             }
 
-            $query = "SELECT * FROM $mytable WHERE user_id = :user_id && disabled = 0";
-            $arr['stud_classes'] = $class->query($query, ['user_id' => Auth::getStudent_id()]);
-            $data = [];
+            //$query = "SELECT * FROM $mytable WHERE user_id = :user_id && disabled = 0";
+            $query = "SELECT classes.class_name, {$mytable}.* FROM $mytable JOIN classes ON classes.class_id = {$mytable}.class_id WHERE {$mytable}.user_id = :user_id && disabled = 0";
+            $params = ['user_id' => Auth::getStudent_id()];
 
-            if ($arr['stud_classes']) {
-                foreach ($arr['stud_classes'] as $key => $value) {
-                    $data[] = $class->first('class_id', $value->class_id);
-                }
+            if(isset($_GET['search'])){
+                $find = '%' . $_GET['search'] . '%';
+                $query = "SELECT classes.class_name, {$mytable}.* FROM $mytable JOIN classes ON classes.class_id = {$mytable}.class_id WHERE {$mytable}.user_id = :user_id && disabled = 0 && class_name LIKE :class_name";
+                $params = ['user_id' => Auth::getStudent_id(), 'class_name'=>$find];
             }
+            $data = $class->query($query, $params);
         }
         $crumbs[] = ['Dashboard', ROOT . '/'];
         $crumbs[] = ['Classes', ROOT . '/classes'];
+
         $this->view('classes', [
             'classes' => $data,
             'crumbs' => $crumbs
         ]);
     }
 
-    public
-    function add()
+    public function add()
     {
         if (!Auth::isLoggedIn()) {
             $this->redirect('login');
@@ -60,7 +61,6 @@ class Classes extends Controller
 
             if ($class->validate($_POST)) {
                 $_POST['date'] = date("Y-m-d H:i:s");
-                print_r($_POST);
                 $class->insert($_POST);
                 $this->redirect('classes');
             } else {

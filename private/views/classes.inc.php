@@ -10,7 +10,8 @@
 
     </tr>
 
-    <?php if(is_array($classes)) {
+    <?php
+    if($classes) {
         foreach ($classes as $class) { ?>
             <tr>
                 <td>
