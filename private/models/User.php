@@ -24,7 +24,11 @@ class User extends Model
         'hash_password'
     ];
 
-    public function validate($data)
+    protected $beforeUpdate = [
+        'hash_password'
+    ];
+
+    public function validate($data, $id = '')
     {
         $this->errors = [];
 
@@ -44,21 +48,26 @@ class User extends Model
         }
 
         // check if email exists
-        $row = $this->where('email', $data['email']);
-        echo "<pre>";
-        var_dump($row);
-        echo "</pre>";
-        if ($row) {
-            $this->errors['email'] = 'That email is already in use!';
+        if(trim($id) == ''){
+            if($this->where('email', $data['email'])){
+                $this->errors['email'] = 'That email is already in use!';
+            }
+
+        } else {
+            if($this->query("select email from $this->table where email = :email && student_id != :id ", ['email'=>$data['email'], 'id'=>$id])){
+                $this->errors['email'] = 'That email is already in use!';
+            }
         }
 
         // check for password
-        if (empty($data['password']) || $data['password'] != $data['password2']) {
-            $this->errors['password'] = 'The passwords did not match!';
-        }
+        if(isset($data['password'])){
+            if (empty($data['password']) || $data['password'] != $data['password2']) {
+                $this->errors['password'] = 'The passwords did not match!';
+            }
 
-        if (strlen($data['password']) <= 8) {
-            $this->errors['password'] = 'Password must be at least 8 characters long !';
+            if (strlen($data['password']) <= 8) {
+                $this->errors['password'] = 'Password must be at least 8 characters long !';
+            }
         }
 
         // check for gender
@@ -96,8 +105,10 @@ class User extends Model
 
     public function hash_password($data)
     {
-        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        return $data;
+        if(isset($data['password'])){
+            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+            return $data;
+        }
     }
 
 }

@@ -73,19 +73,19 @@
                     </div>
                     <div class="mb-3">
                         <input value="<?=get_var('password2')?>"  type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password">
-                        <?php if(isset($errors['password'])) {  ?>
+                        <?php if(isset($errors['password2'])) {  ?>
                             <div class="alert alert-warning mt-2 p-1" role="alert"><?=$errors['password']?></div>
                         <?php } ?>
                     </div>
+                    <div>
+                        <a href="<?=ROOT?>/profile/<?=$user->student_id?>">
+                            <button class="btn btn-danger">Back to profile</button>
+                        </a>
+                        <button type="submit" class="btn btn-success float-end">Save changes</button>
+
+                    </div>
                 </form
             </div>
-        </div>
-        <div>
-            <a href="<?=ROOT?>/profile/<?=$user->student_id?>">
-                <button class="btn btn-danger">Back to profile</button>
-            </a>
-            <button type="submit" name="edit_user" class="btn btn-success float-end">Save changes</button>
-
         </div>
 
         <?php else :?>

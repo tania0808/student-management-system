@@ -4,7 +4,7 @@ class Profile extends Controller
 {
     function index($id = '')
     {
-        if(!Auth::isLoggedIn()){
+        if (!Auth::isLoggedIn()) {
             $this->redirect('login');
         }
 
@@ -60,8 +60,9 @@ class Profile extends Controller
 
     }
 
-    function edit($id = ""){
-        if(!Auth::isLoggedIn()){
+    function edit($id = "")
+    {
+        if (!Auth::isLoggedIn()) {
             $this->redirect('login');
         }
 
@@ -72,6 +73,26 @@ class Profile extends Controller
 
         $data['user'] = $row;
         $data['id'] = $id;
+        $errors = [];
+
+        if (count($_POST) > 0 && Auth::access('reception')) {
+            if (trim($_POST['password'] == '')) {
+                unset($_POST['password']);
+                unset($_POST['password2']);
+            }
+            if ($user->validate($_POST, $id)) {
+                if ($_POST['rank'] == 'super_admin' && $_SESSION['USER']->rank != 'super_admin') {
+                    $_POST['rank'] == 'admin';
+                }
+                $user->update($row->id, $_POST);
+                $this->redirect("profile/edit/$id");
+            } else {
+                // errors
+                $data['errors'] = $user->errors;
+                show($errors);
+            }
+        }
+
         if (Auth::access('reception') || Auth::i_own_content($row)) {
             $this->view('profile-edit', $data);
         } else {
@@ -79,7 +100,8 @@ class Profile extends Controller
         }
     }
 
-    function delete(){
+    function delete()
+    {
 
     }
 }
