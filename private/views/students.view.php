@@ -28,7 +28,11 @@
         } else { ?>
             <h4>No students were found at this time !</h4>
         <?php } ?>
+
     </div>
+    <?php $pager->display();?>
+
 </div>
+
 
 <?php $this->view('includes/footer'); ?>
