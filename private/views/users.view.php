@@ -28,6 +28,7 @@
         <h4>No staff members were found at this time !</h4>
         <?php }?>
     </div>
+    <?php $pager->display();?>
 </div>
 
 <?php $this->view('includes/footer'); ?>

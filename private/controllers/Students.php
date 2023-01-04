@@ -10,9 +10,7 @@ class Students extends Controller
         $user = new User();
         $school_id = Auth::getSchool_id();
 
-        $limit = 10;
-        //$page_number = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        //$page_number = $page_number < 1 ? 1 : $page_number;
+        $limit = 2;
         $pager = new Pager($limit);
         $offset = $pager->offset;
 
@@ -21,7 +19,7 @@ class Students extends Controller
         $arr = ['school_id'=>$school_id];
         if(isset($_GET['search'])){
             $find = '%' . $_GET['search'] . '%';
-            $query = "SELECT * FROM users WHERE school_id = :school_id && (last_name like :lname || first_name like :fname) && rank in ('student') ORDER BY id DESC ";
+            $query = "SELECT * FROM users WHERE school_id = :school_id && (last_name like :lname || first_name like :fname) && rank in ('student') ORDER BY id DESC LIMIT $limit offset $offset";
             $arr = ['school_id'=>$school_id, 'fname' => $find, 'lname' => $find];
         }
         $users = $user->query($query, $arr);

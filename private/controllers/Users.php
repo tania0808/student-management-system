@@ -9,12 +9,15 @@ class Users extends Controller
         }
         $user = new User();
         $school_id = Auth::getSchool_id();
-        $query = "SELECT  * FROM users WHERE school_id = :school_id && rank not in ('student') ORDER BY id DESC ";
+        $limit = 1;
+        $pager = new Pager($limit);
+        $offset = $pager->offset;
+        $query = "SELECT  * FROM users WHERE school_id = :school_id && rank not in ('student') ORDER BY id DESC LIMIT $limit offset $offset";
         $arr = ['school_id'=>$school_id];
 
         if(isset($_GET['search'])){
             $find = '%' . $_GET['search'] . '%';
-            $query = "SELECT  * FROM users WHERE school_id = :school_id && (last_name like :lname || first_name like :fname) && rank not in ('student') ORDER BY id DESC ";
+            $query = "SELECT  * FROM users WHERE school_id = :school_id && (last_name like :lname || first_name like :fname) && rank not in ('student') ORDER BY id DESC LIMIT $limit offset $offset";
             $arr = ['school_id'=>$school_id, 'fname' => $find, 'lname' => $find];
         }
         $users = $user->query($query, $arr);
@@ -26,6 +29,7 @@ class Users extends Controller
                 'users' => $users,
                 'crumbs' => $crumbs,
                 'mode' => 'users',
+                'pager'=>$pager
             ]);
         } else {
             $this->view('access-denied');
