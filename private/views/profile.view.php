@@ -10,6 +10,16 @@
                 <?php $image = get_image($user->image, $user->gender); ?>
                 <img class="rounded-circle border border-primary" src="<?=$image?>" alt="logo" style="width: 150px">
                 <h5 class="mt-3"><?=escape($user->first_name)?> <?=escape($user->last_name)?></h5>
+                <?php if(Auth::access('reception') || Auth::i_own_content($user)): ?>
+                    <div>
+                        <a href="<?=ROOT?>/profile/edit/<?=$user->student_id?>">
+                            <button class="btn btn-success btn-sm">Edit profile</button>
+                        </a>
+                        <a href="<?=ROOT?>/profile/delete/<?=$user->student_id?>">
+                            <button class="btn btn-danger btn-sm">Delete profile</button>
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="col-8 col-xs-12">
                 <table class="table table-hover table-striped table-primary table-bordered">

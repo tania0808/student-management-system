@@ -4,9 +4,13 @@ class Profile extends Controller
 {
     function index($id = '')
     {
-        $id = trim($id == '') ? Auth::getStudent_id() : $id;
+        if(!Auth::isLoggedIn()){
+            $this->redirect('login');
+        }
 
         $user = new User();
+        $id = trim($id == '') ? Auth::getStudent_id() : $id;
+
         $row = $user->first('student_id', $id);
         $crumbs[] = ['Dashboard', ROOT . '/'];
         if ($row) {
@@ -53,6 +57,29 @@ class Profile extends Controller
         } else {
             $this->view('access-denied');
         }
+
+    }
+
+    function edit($id = ""){
+        if(!Auth::isLoggedIn()){
+            $this->redirect('login');
+        }
+
+        $user = new User();
+        $id = trim($id == '') ? Auth::getStudent_id() : $id;
+
+        $row = $user->first('student_id', $id);
+
+        $data['user'] = $row;
+        $data['id'] = $id;
+        if (Auth::access('reception') || Auth::i_own_content($row)) {
+            $this->view('profile-edit', $data);
+        } else {
+            $this->view('access-denied');
+        }
+    }
+
+    function delete(){
 
     }
 }
