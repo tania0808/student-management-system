@@ -17,6 +17,10 @@ class Single_class extends Controller
             $crumbs[] = [$row->class_name, ROOT . ''];
         }
 
+        $limit = 1;
+        $pager = new Pager($limit);
+        $offset = $pager->offset;
+
         $page_tab = isset($_GET['tab']) ? $_GET['tab'] : 'lecturers';
         $lecturer = new Lecturer();
         $results = false;
@@ -24,21 +28,22 @@ class Single_class extends Controller
 
         if ($page_tab == 'lecturers') {
             // display lecturers
-            $query = "SELECT * FROM lecturers WHERE disabled = 0 && class_id = :class_id";
+            $query = "SELECT * FROM lecturers WHERE disabled = 0 && class_id = :class_id LIMIT $limit offset $offset";
             $lecturers = $lecturer->query($query, ['class_id' => $id]);
             $data['lecturers'] = $lecturers;
         } elseif ($page_tab == 'students') {
             // display students
-            $query = "SELECT * FROM students WHERE disabled = 0 && class_id = :class_id";
+            $query = "SELECT * FROM students WHERE disabled = 0 && class_id = :class_id LIMIT $limit offset $offset";
             $students = $lecturer->query($query, ['class_id' => $id]);
             $data['students'] = $students;
-    }
+        }
 
         $data['row'] = $row;
         $data['crumbs'] = $crumbs;
         $data['page_tab'] = $page_tab;
         $data['results'] = $results;
         $data['error'] = $error;
+        $data['pager'] = $pager;
 
         $this->view('single_class', $data);
     }
@@ -50,12 +55,12 @@ class Single_class extends Controller
         }
 
         $classes = new Classe();
-        $row = $classes->first('class_id', $id);
+        $class = $classes->first('class_id', $id);
 
         $crumbs[] = ['Dashboard', ROOT . '/'];
         $crumbs[] = ['Classes', ROOT . '/classes'];
-        if ($row) {
-            $crumbs[] = [$row->class_name, ROOT . ''];
+        if ($class) {
+            $crumbs[] = [$class->class_name, ROOT . ''];
         }
         $page_tab = 'lectureradd';
         $lecturer = new Lecturer();
@@ -73,17 +78,15 @@ class Single_class extends Controller
                     $query = "SELECT * FROM users WHERE (last_name like :lname || first_name like :fname) && rank = 'lecturer' LIMIT 10";
                     $results = $user->query($query, ['fname' => $name, 'lname' => $name]);
                 }
-            }
-
-            if (isset($_POST['select'])) {
+            } else if (isset($_POST['select'])) {
                 // add lecturer
-                $query = "SELECT id FROM lecturers WHERE user_id = :user_id && class_id = :class_id && disabled = 0 LIMIT 10";
+                $query = "SELECT * FROM lecturers WHERE user_id = :user_id && class_id = :class_id LIMIT 10";
                 $user_id = $_POST['select'];
-
-                if (!$lecturer->query($query, [
+                $row = $lecturer->query($query, [
                     'user_id' => $user_id,
                     'class_id' => $id
-                ])) {
+                ]);
+                if (!$row) {
                     $arr = [];
                     $arr['user_id'] = $user_id;
                     $arr['class_id'] = $id;
@@ -92,12 +95,22 @@ class Single_class extends Controller
                     $lecturer->insert($arr);
                     $this->redirect("single_class/$id?tab=lecturers");
                 } else {
-                    $error = 'User already exists !';
+                    if ($row[0]->disabled && $row[0]->disabled == 1) {
+                        $arr = [];
+                        $arr['disabled'] = 0;
+                        $row = $row[0];
+                        $lecturer->update($row->id, $arr);
+                        $this->redirect("single_class/$id?tab=lecturers");
+                    }
+                    else {
+                        $error = 'User already exists !';
+                    }
+
                 }
             }
         }
 
-        $data['row'] = $row;
+        $data['row'] = $class;
         $data['crumbs'] = $crumbs;
         $data['page_tab'] = $page_tab;
         $data['results'] = $results;
@@ -114,12 +127,12 @@ class Single_class extends Controller
         }
 
         $classes = new Classe();
-        $row = $classes->first('class_id', $id);
+        $class = $classes->first('class_id', $id);
 
         $crumbs[] = ['Dashboard', ROOT . '/'];
         $crumbs[] = ['Classes', ROOT . '/classes'];
-        if ($row) {
-            $crumbs[] = [$row->class_name, ROOT . ''];
+        if ($class) {
+            $crumbs[] = [$class->class_name, ROOT . ''];
         }
         $page_tab = 'lecturerremove';
         $lecturer = new Lecturer();
@@ -158,7 +171,7 @@ class Single_class extends Controller
             }
         }
 
-        $data['row'] = $row;
+        $data['class'] = $row;
         $data['crumbs'] = $crumbs;
         $data['page_tab'] = $page_tab;
         $data['results'] = $results;
@@ -174,12 +187,12 @@ class Single_class extends Controller
         }
 
         $classes = new Classe();
-        $row = $classes->first('class_id', $id);
+        $class = $classes->first('class_id', $id);
 
         $crumbs[] = ['Dashboard', ROOT . '/'];
         $crumbs[] = ['Classes', ROOT . '/classes'];
-        if ($row) {
-            $crumbs[] = [$row->class_name, ROOT . ''];
+        if ($class) {
+            $crumbs[] = [$class->class_name, ROOT . ''];
         }
         $page_tab = 'studentadd';
         $student = new Student();
@@ -201,13 +214,13 @@ class Single_class extends Controller
 
             if (isset($_POST['select'])) {
                 // add student
-                $query = "SELECT id FROM students WHERE user_id = :user_id && class_id = :class_id && disabled = 0 LIMIT 10";
+                $query = "SELECT * FROM students WHERE user_id = :user_id && class_id = :class_id LIMIT 10";
                 $user_id = $_POST['select'];
-
-                if (!$student->query($query, [
+                $row = $student->query($query, [
                     'user_id' => $user_id,
                     'class_id' => $id
-                ])) {
+                ]);
+                if (!$row) {
                     $arr = [];
                     $arr['user_id'] = $user_id;
                     $arr['class_id'] = $id;
@@ -216,12 +229,19 @@ class Single_class extends Controller
                     $student->insert($arr);
                     $this->redirect("single_class/$id?tab=students");
                 } else {
-                    $error = 'User already exists !';
+                    if ($row[0]->disabled && $row[0]->disabled == 1) {
+                        $arr = [];
+                        $arr['disabled'] = 0;
+                        $student->update($row[0]->id, $arr);
+                        $this->redirect("single_class/$id?tab=students");
+                    } else {
+                        $error = 'User already exists !';
+                    }
                 }
             }
         }
 
-        $data['row'] = $row;
+        $data['row'] = $class;
         $data['crumbs'] = $crumbs;
         $data['page_tab'] = $page_tab;
         $data['results'] = $results;

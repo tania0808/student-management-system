@@ -9,7 +9,7 @@ class Users extends Controller
         }
         $user = new User();
         $school_id = Auth::getSchool_id();
-        $limit = 1;
+        $limit = 4;
         $pager = new Pager($limit);
         $offset = $pager->offset;
         $query = "SELECT  * FROM users WHERE school_id = :school_id && rank not in ('student') ORDER BY id DESC LIMIT $limit offset $offset";

@@ -4,7 +4,8 @@
 
     <div class="container container-fluid p-4 shadow mx-auto" style="max-width: 1000px">
         <?php $this->view('includes/breadcrumb', ['crumbs' => $crumbs]); ?>
-        <?php if ($row) : ?>
+        <?php
+        if ($row) : ?>
             <div class="row d-flex justify-content-center px-5">
                 <h4 class="text-center mb-3"><?= ucwords(escape($row->class_name)) ?></h4>
 
@@ -75,6 +76,7 @@
         <?php else : ?>
             <h3 class="text-center">That profile was not found !</h3>
         <?php endif; ?>
+        <?php $pager->display();?>
     </div>
 
 
