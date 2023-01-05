@@ -41,7 +41,8 @@ function get_image($image, $gender = 'female'){
             $image = ROOT . '/images/user_male.jpg';
         }
     } else {
-        $image = ROOT . '/' . $image;
+        $class = new Image();
+        $image = ROOT . '/' . $class->profile_thumb($image);
     }
     return $image;
 }

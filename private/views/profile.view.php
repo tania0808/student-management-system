@@ -10,7 +10,7 @@
                 <?php $image = get_image($user->image, $user->gender); ?>
                 <img class="rounded-circle border border-primary" src="<?=$image?>" alt="logo" style="width: 150px">
                 <h5 class="mt-3"><?=escape($user->first_name)?> <?=escape($user->last_name)?></h5>
-                <?php if(Auth::access('reception') || Auth::i_own_content($user)): ?>
+                <?php if(Auth::access('admin') || (Auth::access('reception') && $user->rank == 'student')): ?>
                     <div>
                         <a href="<?=ROOT?>/profile/edit/<?=$user->student_id?>">
                             <button class="btn btn-success btn-sm">Edit profile</button>
