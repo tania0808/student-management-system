@@ -40,6 +40,8 @@ function get_image($image, $gender = 'female'){
         if($gender == 'male'){
             $image = ROOT . '/images/user_male.jpg';
         }
+    } else {
+        $image = ROOT . '/' . $image;
     }
     return $image;
 }

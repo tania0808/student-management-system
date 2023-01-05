@@ -81,6 +81,20 @@ class Profile extends Controller
                 unset($_POST['password2']);
             }
             if ($user->validate($_POST, $id)) {
+                // check for files
+                if(count($_FILES) > 0){
+                    $allowed = ['image/jpeg', 'image/png'];
+                    if($_FILES['image']['error'] == 0 && in_array($_FILES['image']['type'], $allowed)){
+                        $folder = 'uploads/';
+                        if(!file_exists($folder)){
+                            mkdir($folder, 0777, true);
+                        }
+                        $destination = $folder . $_FILES['image']['name'];
+                        move_uploaded_file($_FILES['image']['tmp_name'], $destination);
+                        $_POST['image'] = $destination;
+                    }
+                }
+
                 if ($_POST['rank'] == 'super_admin' && $_SESSION['USER']->rank != 'super_admin') {
                     $_POST['rank'] == 'admin';
                 }
@@ -89,7 +103,6 @@ class Profile extends Controller
             } else {
                 // errors
                 $data['errors'] = $user->errors;
-                show($errors);
             }
         }
 
